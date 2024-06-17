@@ -52,12 +52,15 @@ class Camera:
 
     def _load_calibration(self):
         path = f"{calibration_data_dir}/extrinsics_{self.mxid}.npz"
+        print(path)
         try:
             extrinsics = np.load(path)
             self.cam_to_world = extrinsics["cam_to_world"]
             self.world_to_cam = extrinsics["world_to_cam"]
         except:
+            print(self.mxid, path)
             raise RuntimeError(f"Could not load calibration data for camera {self.mxid} from {path}!")
+            
 
         calibration = self.device.readCalibration()
         self.intrinsics = calibration.getCameraIntrinsics(

@@ -26,7 +26,7 @@ max_range = 2000			# mm
 median   = dai.StereoDepthProperties.MedianFilter.KERNEL_7x7
 
 # CALIBRATION
-calibration_data_dir = os.getenv("calibration_data_dir")
+calibration_data_dir = str(os.getenv("calibration_data_dir")).replace("'", "")
 
 # Input/Output
 OUTPUT_DIR = os.getenv("OUT")
