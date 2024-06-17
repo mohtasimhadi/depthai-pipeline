@@ -4,3 +4,5 @@ env
 .env
 calibration_data
 *.ipynb
+input
+out
