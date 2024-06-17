@@ -10,6 +10,7 @@ with open('.env', 'r') as fh:
 os.environ.update(vars_dict)
 
 CAM_1 = os.getenv("CAM_1_MXID")
+CAM_2 = os.getenv("CAM_2_MXID")
 
 COLOR = True 		# Use color camera of mono camera
 
@@ -26,7 +27,10 @@ max_range = 2000			# mm
 median   = dai.StereoDepthProperties.MedianFilter.KERNEL_7x7
 
 # CALIBRATION
-calibration_data_dir = str(os.getenv("calibration_data_dir")).replace("'", "")
+CALIBRATION_DATA_DIR = str(os.getenv("calibration_data_dir")).replace("'", "")
+CHECKERBOARD_LENGTH = int(os.getenv("checkerboard_length"))
+CHECKEBOARD_WIDTH = int(os.getenv("checkerboard_width"))
+SQUARE_ARM_SIZE = float(os.getenv("square_arm_size"))
 
 # Input/Output
 OUTPUT_DIR = os.getenv("OUT")

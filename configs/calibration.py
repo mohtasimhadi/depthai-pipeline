@@ -1,3 +1,5 @@
-checkerboard_size = (10, 7) # number of squares on the checkerboard
-square_size = 0.0251 # size of a square in meters
-calibration_data_dir = "calibration_data" # directory relative to main.py
+from settings import *
+
+checkerboard_size = (CHECKERBOARD_LENGTH, CHECKEBOARD_WIDTH)
+square_size = SQUARE_ARM_SIZE
+CALIBRATION_DATA_DIR = CALIBRATION_DATA_DIR

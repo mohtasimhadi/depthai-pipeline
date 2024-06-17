@@ -19,7 +19,7 @@ class Camera:
 
         self.window_name = f"[{self.friendly_id}] Camera - mxid: {self.mxid}"
         cv2.namedWindow(self.window_name, cv2.WINDOW_NORMAL)
-        cv2.resizeWindow(self.window_name, 640, 360)
+        cv2.resizeWindow(self.window_name, 1280, 720)
 
         # Camera intrinsic parameters
         self.intrinsic_mat = np.array(self.device.readCalibration().getCameraIntrinsics(dai.CameraBoardSocket.RGB, 3840, 2160))
@@ -169,7 +169,7 @@ class Camera:
 
         # save the results
         try:
-            path = os.path.join(os.path.dirname(__file__), f"{calibration_data_dir}")
+            path = os.path.join(os.path.dirname(__file__), f"{CALIBRATION_DATA_DIR}")
             os.makedirs(path, exist_ok=True)
             np.savez(
                 f"{path}/extrinsics_{self.device_info.getMxId()}.npz", 

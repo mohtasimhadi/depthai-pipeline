@@ -51,7 +51,7 @@ class Camera:
         print("=== Closed " + self.device_info.getMxId())
 
     def _load_calibration(self):
-        path = f"{calibration_data_dir}/extrinsics_{self.mxid}.npz"
+        path = f"{CALIBRATION_DATA_DIR}/extrinsics_{self.mxid}.npz"
         print(path)
         try:
             extrinsics = np.load(path)
@@ -73,14 +73,14 @@ class Camera:
         )
 
         try:
-            self.point_cloud_alignment = np.load(f"{calibration_data_dir}/point_cloud_alignment_{self.mxid}.npy")
+            self.point_cloud_alignment = np.load(f"{CALIBRATION_DATA_DIR}/point_cloud_alignment_{self.mxid}.npy")
         except:
             self.point_cloud_alignment = np.eye(4)
 
         print(self.pinhole_camera_intrinsic)
 
     def save_point_cloud_alignment(self):
-        np.save(f"{calibration_data_dir}/point_cloud_alignment_{self.mxid}.npy", self.point_cloud_alignment)
+        np.save(f"{CALIBRATION_DATA_DIR}/point_cloud_alignment_{self.mxid}.npy", self.point_cloud_alignment)
     
 
     def _create_pipeline(self):
