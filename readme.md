@@ -81,11 +81,11 @@ This example demonstrates how point clouds from different cameras can be merged 
 ![demo](img/demo.gif)
 
 ## Usage
-> Before you can run this demo you need to calibrate the cameras. Go to [multi-cam-calibration](../multi-cam-calibration) and generate a calibration file for each camera. Make sure that the `calibration_data_dir` in the [`config.py`](config.py) is set correctly.
+> Before you can run this demo you need to calibrate the cameras. Generate a calibration file for each camera. Make sure that the `calibration_data_dir` in the env is set correctly.
 
 Run the [`main.py`](main.py) with Python 3.
 ```
-python3 main.py
+python main.py
 ```
 
 The point clouds might not be aligned perfectly. To refine the alignment press the `a` key. The results will be saved to the `calibration_data_dir` set in the env file. To get the best results perform the alignment porcess on high contrast scene.
