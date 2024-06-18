@@ -1,3 +1,4 @@
+from datetime import datetime
 import open3d as o3d
 from camera.camera import Camera
 from typing import List
@@ -28,6 +29,8 @@ class PointCloudVisualizer:
             self.update()
 
     def update(self):
+        timestamp = datetime.now()
+
         self.point_cloud.clear()
 
         for camera in self.cameras:
@@ -37,6 +40,7 @@ class PointCloudVisualizer:
         self.point_cloud_window.update_geometry(self.point_cloud)
         self.point_cloud_window.poll_events()
         self.point_cloud_window.update_renderer()
+        o3d.io.write_point_cloud(f"{OUTPUT_DIR}/pcl_{str(timestamp)}.ply", self.point_cloud)
 
     def align_point_clouds(self):
         voxel_radius = [0.04, 0.02, 0.01]
