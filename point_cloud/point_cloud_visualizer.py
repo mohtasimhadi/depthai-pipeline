@@ -1,6 +1,6 @@
 from datetime import datetime
 import open3d as o3d
-from camera.camera import Camera
+from camera.recording import Camera
 from typing import List
 import numpy as np
 from settings import max_range, OUTPUT_DIR

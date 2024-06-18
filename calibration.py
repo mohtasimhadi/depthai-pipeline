@@ -1,6 +1,6 @@
 import cv2
 import depthai as dai
-from camera_calibration import Camera
+from camera.calibration import Camera
 from typing import List
 
 device_infos = dai.Device.getAllAvailableDevices()

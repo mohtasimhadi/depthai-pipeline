@@ -1,5 +1,5 @@
 import depthai as dai
-from camera.camera import Camera
+from camera.recording import Camera
 from typing import List
 from point_cloud.point_cloud_visualizer import PointCloudVisualizer
 
