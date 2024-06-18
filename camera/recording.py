@@ -2,7 +2,8 @@ import depthai as dai
 import cv2
 import numpy as np
 import open3d as o3d
-from configs.settings import CALIBRATION_DATA_DIR, COLOR, MEDIAN
+from configs.settings import COLOR, MEDIAN
+from configs.calibration import CALIBRATION_DATA_DIR
 from configs.depth import MAX_RANGE, CONFIDENCE_THRESHOLD, LRCHECK, MIN_RANGE, SUBPIXEL, EXTENDED
 from camera.host_sync import HostSync
 
