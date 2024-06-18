@@ -3,8 +3,7 @@ import open3d as o3d
 from camera.recording import Camera
 from typing import List
 import numpy as np
-from configs.settings import OUTPUT_DIR
-from configs.depth import MAX_RANGE
+from configs import MAX_RANGE, OUTPUT_DIR
 
 class PointCloudVisualizer:
     def __init__(self, cameras: List[Camera]):

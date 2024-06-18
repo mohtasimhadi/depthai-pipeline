@@ -1,9 +1,8 @@
-import depthai as dai
-import cv2
+import os, cv2, time
 import numpy as np
-import time
-from configs.calibration import *
-import os
+import depthai as dai
+from configs import CHECKERBOARD_SIZE, SQUARE_SIZE, CALIBRATION_DATA_DIR
+
 
 class Camera:
     def __init__(self, device_info: dai.DeviceInfo, friendly_id: int):
