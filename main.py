@@ -9,7 +9,7 @@ if len(device_infos) == 0:
 else:
     print("Found", len(device_infos), "devices")
 
-device_infos.sort(key=lambda x: x.getMxId(), reverse=True) # sort the cameras by their mxId
+device_infos.sort(key=lambda x: x.getMxId(), reverse=True)
 
 cameras: List[Camera] = []
 
