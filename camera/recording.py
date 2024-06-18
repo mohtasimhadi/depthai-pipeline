@@ -2,7 +2,8 @@ import depthai as dai
 import cv2
 import numpy as np
 import open3d as o3d
-from settings import *
+from configs.settings import CALIBRATION_DATA_DIR, COLOR, MEDIAN
+from configs.depth import MAX_RANGE, CONFIDENCE_THRESHOLD, LRCHECK, MIN_RANGE, SUBPIXEL, EXTENDED
 from camera.host_sync import HostSync
 
 class Camera:
@@ -40,7 +41,7 @@ class Camera:
             self.point_cloud_window.add_geometry(self.point_cloud)
             origin = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.3, origin=[0, 0, 0])
             self.point_cloud_window.add_geometry(origin)
-            self.point_cloud_window.get_view_control().set_constant_z_far(max_range*2)
+            self.point_cloud_window.get_view_control().set_constant_z_far(MAX_RANGE*2)
 
         self._load_calibration()
 
@@ -95,11 +96,11 @@ class Camera:
         mono_right.setBoardSocket(dai.CameraBoardSocket.RIGHT)
         cam_stereo = pipeline.createStereoDepth()
         cam_stereo.setDefaultProfilePreset(dai.node.StereoDepth.PresetMode.HIGH_DENSITY)
-        cam_stereo.initialConfig.setMedianFilter(median)
-        cam_stereo.initialConfig.setConfidenceThreshold(confidence_threshold)
-        cam_stereo.setLeftRightCheck(lrcheck)
-        cam_stereo.setExtendedDisparity(extended)
-        cam_stereo.setSubpixel(subpixel)
+        cam_stereo.initialConfig.setMedianFilter(MEDIAN)
+        cam_stereo.initialConfig.setConfidenceThreshold(CONFIDENCE_THRESHOLD)
+        cam_stereo.setLeftRightCheck(LRCHECK)
+        cam_stereo.setExtendedDisparity(EXTENDED)
+        cam_stereo.setSubpixel(SUBPIXEL)
         mono_left.out.link(cam_stereo.left)
         mono_right.out.link(cam_stereo.right)
 
@@ -110,8 +111,8 @@ class Camera:
         init_config.postProcessing.spatialFilter.enable = True
         init_config.postProcessing.spatialFilter.holeFillingRadius = 2
         init_config.postProcessing.spatialFilter.numIterations = 1
-        init_config.postProcessing.thresholdFilter.minRange = min_range
-        init_config.postProcessing.thresholdFilter.maxRange = max_range
+        init_config.postProcessing.thresholdFilter.minRange = MIN_RANGE
+        init_config.postProcessing.thresholdFilter.maxRange = MAX_RANGE
         init_config.postProcessing.decimationFilter.decimationFactor = 1
         cam_stereo.initialConfig.set(init_config)
 

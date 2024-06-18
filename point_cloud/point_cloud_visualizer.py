@@ -3,7 +3,8 @@ import open3d as o3d
 from camera.recording import Camera
 from typing import List
 import numpy as np
-from settings import max_range, OUTPUT_DIR
+from configs.settings import OUTPUT_DIR
+from configs.depth import MAX_RANGE
 
 class PointCloudVisualizer:
     def __init__(self, cameras: List[Camera]):
@@ -21,7 +22,7 @@ class PointCloudVisualizer:
         origin = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.3, origin=[0, 0, 0])
         self.point_cloud_window.add_geometry(origin)
         view = self.point_cloud_window.get_view_control()
-        view.set_constant_z_far(max_range*2)
+        view.set_constant_z_far(MAX_RANGE*2)
 
         self.running = True
 

@@ -1,5 +1,5 @@
 import depthai as dai
-from settings import *
+from configs.settings import *
 
 pipeline = dai.Pipeline()
 

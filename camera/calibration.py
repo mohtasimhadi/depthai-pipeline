@@ -31,9 +31,9 @@ class Camera:
         self.world_to_cam = None
         self.cam_to_world = None
 
-        self.checkerboard_size = checkerboard_size
+        self.checkerboard_size = CHECKERBOARD_SIZE
         self.checkerboard_inner_size = (self.checkerboard_size[0] - 1, self.checkerboard_size[1] - 1)
-        self.square_size = square_size
+        self.square_size = SQUARE_SIZE
         self.corners_world = np.zeros((1, self.checkerboard_inner_size[0] * self.checkerboard_inner_size[1], 3), np.float32)
         self.corners_world[0,:,:2] = np.mgrid[0:self.checkerboard_inner_size[0], 0:self.checkerboard_inner_size[1]].T.reshape(-1, 2)
         self.corners_world *= self.square_size
