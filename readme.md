@@ -94,13 +94,11 @@ points, _ = cv2.projectPoints(
 resulting `points` contains postions in pixels.
 
 
-
-### Stream and Save Point cloud fusion
+## Stream and Save Point cloud fusion
 This example demonstrates how point clouds from different cameras can be merged together.
 
 ![demo](img/demo.gif)
 
-## Usage
 > Before you can run this demo you need to calibrate the cameras. Generate a calibration file for each camera. Make sure that the `calibration_data_dir` in the env is set correctly.
 
 Run the [`main.py`](main.py) with Python 3.
@@ -112,7 +110,7 @@ The point clouds might not be aligned perfectly. To refine the alignment press t
 
 The alignment is achieved with the Open3D library ([example](http://www.open3d.org/docs/latest/python_example/pipelines/index.html#colored-icp-registration-py)).
 
-## Controls
+### Controls
 | key 			| action
 | :---			| :---			|
 | `q`			| quit 			|
@@ -120,6 +118,24 @@ The alignment is achieved with the Open3D library ([example](http://www.open3d.o
 | `r`			| reset alignment |
 | `s`			| save pointclouds to `sample_data` |
 | `d`			| toggle depth view |
+
+## Extract Frames from Pre-recorded Videos
+
+Run the [`main.py`](main.py) with Python 3.
+```
+python main.py --operation frame_extraction --video_path <path of the video> --output_dir <path to save extracted images>
+```
+
+'--video_path' and '--output_dir' are optional parameters if it's saved properly in the '.env' file.
+
+## Generate PointCloud from RGB Image(s)
+
+Pointclouds are generated using the depth image created using 'depth_anything_v2' module and it's necessary to download the models and save it in the right path to use it. The parameters of the function is optional if they are stored in the 'env' file properly.
+
+Run the [`main.py`](main.py) with Python 3.
+```
+python main.py --operation offline_pcl --img_path <image_path> --output_dir <output_path> --default_model <model name> --model_dir <path of model>
+```
 
 
 # Reference
