@@ -1,14 +1,13 @@
 import depthai as dai
 from camera.recording import Camera
 from typing import List
-from helpers.log import *
+from utils.log import *
 from point_cloud.online import PointCloudVisualizer
 
 def stream_pointcloud():
     device_infos = dai.Device.getAllAvailableDevices()
     if len(device_infos) == 0:
-        print(f"{WARNING}No devices found!")
-        exit()
+        no_camera_found()
     else:
         print(f"{LOG}Found", len(device_infos), "devices")
 

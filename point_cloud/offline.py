@@ -7,7 +7,7 @@ import open3d as o3d
 from PIL import Image
 
 from depth_anything_v2.dpt import DepthAnythingV2
-from helpers.log import *
+from utils.log import *
 from configs.depth import MODEL_CONFIGS, DEFAULT_MODEL, MODEL_DIR
 from configs.calibration import FL, FY, FX, NYU_DATA, FINAL_HEIGHT, FINAL_WIDTH
 from configs.settings import RGB_IMAGE_DIR, OUTPUT_DIR

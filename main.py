@@ -1,10 +1,12 @@
 import argparse
-from streaming import stream_pointcloud
+from utils.log import *
+from camera import stream_pointcloud
 from helpers.frame_extraction import extract_frames
-from helpers.log import *
 from point_cloud.offline import generate_pointclouds
+from calibration import calibrate_camera
 
 functions = {
+    "calibrate"         :   (calibrate_camera, []),
     "stream"            :   (stream_pointcloud, []),
     "frame_extraction"  :   (extract_frames, ['video_path', 'output_dir']),
     "offline_pcl"       :   (generate_pointclouds, ['img_path', 'output_dir', 'default_model', 'model_dir'])

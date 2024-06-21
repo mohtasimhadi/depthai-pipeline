@@ -1,5 +1,5 @@
 import cv2, os
-from helpers.log import *
+from utils.log import *
 
 def extract_frames(video_path, output_folder):
     cap = cv2.VideoCapture(video_path)
