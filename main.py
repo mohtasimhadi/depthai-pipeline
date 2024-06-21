@@ -3,7 +3,7 @@ from utils.log import *
 from camera import stream_pointcloud
 from helpers.frame_extraction import extract_frames
 from point_cloud.offline import generate_pointclouds
-from calibration import calibrate_camera
+from camera.calibration import calibrate_camera
 
 functions = {
     "calibrate"         :   (calibrate_camera, []),

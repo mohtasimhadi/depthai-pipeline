@@ -1,7 +1,9 @@
 import os, cv2, time
 import numpy as np
 import depthai as dai
+from typing import List
 from configs import CHECKERBOARD_SIZE, SQUARE_SIZE, CALIBRATION_DATA_DIR
+from utils.log import *
 
 
 class Camera:
@@ -37,11 +39,11 @@ class Camera:
         self.corners_world[0,:,:2] = np.mgrid[0:self.checkerboard_inner_size[0], 0:self.checkerboard_inner_size[1]].T.reshape(-1, 2)
         self.corners_world *= self.square_size
 
-        print("=== Connected to " + self.device_info.getMxId())
+        print(f"{LOG}Connected to " + self.device_info.getMxId())
 
     def __del__(self):
         self.device.close()
-        print("=== Closed " + self.device_info.getMxId())
+        print(f"{LOG}Closed " + self.device_info.getMxId())
     
     def _create_pipeline(self):
         pipeline = dai.Pipeline()
@@ -83,7 +85,7 @@ class Camera:
         cv2.imshow(self.window_name, self.frame_rgb)
 
     def capture_still(self, timeout_ms: int = 1000):
-        print("capturing still")
+        print(f"{LOG}Capturing still")
         # Empty the queue
         self.still_queue.tryGetAll()
 
@@ -99,7 +101,7 @@ class Camera:
             time.sleep(0.1)
             in_still = self.still_queue.tryGet()
             if time.time()*1000 - start_time > timeout_ms:
-                print("did not recieve still image - retrying")
+                print(f"{WARNING}did not recieve still image - retrying")
                 return self.capture_still(timeout_ms)
 
         still_rgb = cv2.imdecode(in_still.getData(), cv2.IMREAD_UNCHANGED)
@@ -123,12 +125,12 @@ class Camera:
     def estimate_pose(self):
         frame_rgb = self.capture_still()
         if frame_rgb is None:
-            print("did not recieve still image")
+            print(f"{WARNING}did not recieve still image")
             return
 
         frame_gray = cv2.cvtColor(frame_rgb, cv2.COLOR_BGR2GRAY)
         
-        print("Finding checkerboard corners...")
+        print(f"{LOG}Finding checkerboard corners...")
 
         # find the checkerboard corners
         found, corners = cv2.findChessboardCorners(
@@ -137,7 +139,7 @@ class Camera:
         )
 
         if not found:
-            print("Checkerboard not found")
+            print(f"{WARNING}Checkerboard not found")
             return None
 
         # refine the corner locations
@@ -161,10 +163,10 @@ class Camera:
         cv2.imshow(self.window_name, reprojection)
         cv2.waitKey()
 
-        print("Camera to world transformation: \n", self.cam_to_world)
-        print("World to camera transformation: \n", self.world_to_cam)
-        print("Rotation vector: \n", self.rot_vec)
-        print("Translation vector: \n", self.trans_vec)
+        print(f"{SUCCESS}Camera to world transformation: \n", self.cam_to_world)
+        print(f"{SUCCESS}World to camera transformation: \n", self.world_to_cam)
+        print(f"{SUCCESS}Rotation vector: \n", self.rot_vec)
+        print(f"{SUCCESS}Translation vector: \n", self.trans_vec)
 
         # save the results
         try:
@@ -175,4 +177,54 @@ class Camera:
                 world_to_cam=self.world_to_cam, cam_to_world=self.cam_to_world, trans_vec=self.trans_vec, rot_vec=self.rot_vec
             )
         except:
-            print("Could not save calibration data")
+            print(f"{ERROR}Could not save calibration data")
+
+def calibrate_camera():
+    device_infos = dai.Device.getAllAvailableDevices()
+    if len(device_infos) == 0:
+        no_camera_found()
+    else:
+        print(f"{LOG}Found", len(device_infos), "devices")
+
+    device_infos.sort(key=lambda x: x.getMxId(), reverse=True) # sort the cameras by their mxId
+
+    cameras: List[Camera] = []
+
+    friendly_id = 0
+    for device_info in device_infos:
+        friendly_id += 1
+        cameras.append(Camera(device_info, friendly_id))
+
+    selected_camera = cameras[0]
+
+    def select_camera(friendly_id: int):
+        global selected_camera
+
+        i = friendly_id - 1
+        if i >= len(cameras) or i < 0: 
+            return None 
+
+        selected_camera = cameras[i]
+        print(f"{LOG}Selected camera {friendly_id}")
+
+        return selected_camera
+
+    select_camera(1)
+
+    while True:
+        key = cv2.waitKey(1)
+
+        # QUIT - press `q` to quit
+        if key == ord('q'):
+            break
+        
+        # CAMERA SELECTION - use the number keys to select a camera
+        if key >= ord('1') and key <= ord('9'):
+            select_camera(key - ord('1') + 1)
+
+        # POSE ESTIMATION - press `p` to estimate the pose of the selected camera and save it to file
+        if key == ord('p'):
+            selected_camera.estimate_pose()
+
+        for camera in cameras:
+            camera.update()
