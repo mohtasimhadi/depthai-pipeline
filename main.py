@@ -2,10 +2,12 @@ import argparse
 from streaming import stream_pointcloud
 from helpers import frame_extraction
 from helpers.log import *
+from point_cloud.offline import generate_pointclouds
 
 functions = {
     "stream"            :   (stream_pointcloud, []),
-    "frame_extraction"  :   (frame_extraction, ['video_path', 'output_folder'])
+    "frame_extraction"  :   (frame_extraction, ['video_path', 'output_folder']),
+    "offline_pcl"       :   (generate_pointclouds, [])
 }
 
 

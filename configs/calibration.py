@@ -13,3 +13,10 @@ CHECKERBOARD_LENGTH = int(os.getenv("checkerboard_length"))
 CHECKEBOARD_WIDTH = int(os.getenv("checkerboard_width"))
 CHECKERBOARD_SIZE = (CHECKERBOARD_LENGTH, CHECKEBOARD_WIDTH)
 SQUARE_SIZE = float(os.getenv("square_arm_size"))
+
+FL=float(os.getenv("FL"))
+FY=float(os.getenv("FY"))
+FX=float(os.getenv("FX"))
+NYU_DATA=False
+FINAL_HEIGHT=int(os.getenv("FINAL_HEIGHT"))
+FINAL_WIDTH=int(os.getenv("FINAL_WIDTH"))

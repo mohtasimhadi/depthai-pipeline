@@ -2,7 +2,7 @@ import depthai as dai
 from camera.recording import Camera
 from typing import List
 from helpers.log import *
-from point_cloud.point_cloud_visualizer import PointCloudVisualizer
+from point_cloud.online import PointCloudVisualizer
 
 def stream_pointcloud():
     device_infos = dai.Device.getAllAvailableDevices()
