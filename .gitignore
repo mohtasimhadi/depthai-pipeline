@@ -6,3 +6,8 @@ calibration_data
 *.ipynb
 input
 out
+checkpoints
+metric_depth
+app.py
+run.py
+run_video.py
