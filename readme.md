@@ -5,6 +5,18 @@
 pip install -r requirements.txt
 ```
 
+# Pre-trained Models
+
+Download and save them in ```checkpoints/``` directory.
+
+| Model | Params | Checkpoint |
+|:-|-:|:-:|
+| Depth-Anything-V2-Small | 24.8M | [Download](https://huggingface.co/depth-anything/Depth-Anything-V2-Small/resolve/main/depth_anything_v2_vits.pth?download=true) |
+| Depth-Anything-V2-Base | 97.5M | [Download](https://huggingface.co/depth-anything/Depth-Anything-V2-Base/resolve/main/depth_anything_v2_vitb.pth?download=true) |
+| Depth-Anything-V2-Large | 335.3M | [Download](https://huggingface.co/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth?download=true) |
+| Depth-Anything-V2-Giant | 1.3B | Coming soon |
+
+
 # Multi camera calibration
 This example demonstrates how to compute extrinsic parameters (pose of the camera) for multiple cameras.
 
