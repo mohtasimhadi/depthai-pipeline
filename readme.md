@@ -1,5 +1,5 @@
 # DepthAI Pointcloud Generation Pipeline
-## Installation
+# Installation
 1. Clone the repository
 ```bash
 git clone https://github.com/mohtasimhadi/depthai-pipeline.git
@@ -25,12 +25,16 @@ pip install -r requirements.txt
 | Depth-Anything-V2-Large | 335.3M | [Download](https://huggingface.co/depth-anything/Depth-Anything-V2-Large/resolve/main/depth_anything_v2_vitl.pth?download=true) |
 | Depth-Anything-V2-Giant | 1.3B | Coming soon |
 
+# Usage
+## Multi camera calibration
 
-# Multi camera calibration
 This example demonstrates how to compute extrinsic parameters (pose of the camera) for multiple cameras.
 
+```bash
+python main.py --operation calibrate
+```
 
-## Controls
+### Controls
 | key 			| action
 | :---			| :---			|
 | `1` ... `9` 	| select camera |
@@ -40,21 +44,16 @@ This example demonstrates how to compute extrinsic parameters (pose of the camer
 ## Configuration
 Properties of the checkerboard used for calibration and the calibration data directory can be changed in the env file.
 
-## Usage
-Run the [`main.py`](main.py) with Python 3.
-
 __Measure the pose of the camera__ \
 Select the camera. Press the `p` key to estimate the pose of the camera. An overlay showing the coordinate system will appear. To dismiss the overlay press any key. The pose of the camera will be saved to a file (`calibration_data/extrinsics_<camera_mxid>` by default). \
 _Repeat for every camera_. 
 
 ![pose estimation](img/pose.png)
 
-## How it works
+### How it works
 Open CV's [`findChessboardCorners`](https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#ga93efa9b0aa890de240ca32b11253dd4a) is used to find the checkerboard and [`solvePnP`](https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html#ga549c2075fac14829ff4a58bc931c033d) is used to compute the translation and rotation  from the camera to the checkerboard.
 
-
-
-## Interpret the results
+### Interpret the results
 
 The results can be read with Numpy's load function:
 ```python
@@ -96,7 +95,7 @@ resulting `points` contains postions in pixels.
 
 
 
-## Point cloud fusion
+### Stream and Save Point cloud fusion
 This example demonstrates how point clouds from different cameras can be merged together.
 
 ![demo](img/demo.gif)
@@ -106,7 +105,7 @@ This example demonstrates how point clouds from different cameras can be merged 
 
 Run the [`main.py`](main.py) with Python 3.
 ```
-python main.py
+python main.py --operation stream
 ```
 
 The point clouds might not be aligned perfectly. To refine the alignment press the `a` key. The results will be saved to the `calibration_data_dir` set in the env file. To get the best results perform the alignment porcess on high contrast scene.
