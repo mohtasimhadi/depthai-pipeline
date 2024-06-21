@@ -122,3 +122,6 @@ The alignment is achieved with the Open3D library ([example](http://www.open3d.o
 | `s`			| save pointclouds to `sample_data` |
 | `d`			| toggle depth view |
 
+
+# Reference
+1. [Depth Anything V2](arXiv:2406.09414), Yang, Lihe and Kang, Bingyi and Huang, Zilong and Zhao, Zhen and Xu, Xiaogang and Feng, Jiashi and Zhao, Hengshuang *arXiv:2406.09414* 2024
