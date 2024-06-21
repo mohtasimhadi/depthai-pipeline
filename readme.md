@@ -1,13 +1,16 @@
 # DepthAI Pointcloud Generation Pipeline
-## Installing dependencies
-
+## Installation
+1. Clone the repository
+```bash
+git clone https://github.com/mohtasimhadi/depthai-pipeline.git
+cd depthai-pipeline
+```
+2. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-# Pre-trained Models
-
-Download and save them in ```checkpoints/``` directory.
+3. *(Optional)* Download pre-trained models of [depth_anything_v2](https://depth-anything-v2.github.io/) and save them in ```checkpoints``` directory.
 
 | Model | Params | Checkpoint |
 |:-|-:|:-:|
