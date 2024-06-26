@@ -176,6 +176,7 @@ class Camera:
                 f"{path}/extrinsics_{self.device_info.getMxId()}.npz", 
                 world_to_cam=self.world_to_cam, cam_to_world=self.cam_to_world, trans_vec=self.trans_vec, rot_vec=self.rot_vec
             )
+            print(f"{SUCCESS}Saved calibration data at {path}/extrinsics_{self.device_info.getMxId()}.npz")
         except:
             print(f"{ERROR}Could not save calibration data")
 

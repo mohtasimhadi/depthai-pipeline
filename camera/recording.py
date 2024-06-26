@@ -77,6 +77,7 @@ class Camera:
         except:
             self.point_cloud_alignment = np.eye(4)
 
+        print(self.image_size)
         print(self.pinhole_camera_intrinsic)
 
     def save_point_cloud_alignment(self):

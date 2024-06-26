@@ -18,7 +18,7 @@ def get_SGBM_depth(imgL, imgR, out, focal_length, baseline, numDisparities, bloc
     cv2.imwrite(out, depth)
     return depth
 
-def get_depth(left_stereo=INPUT_DIR+'/frames/mono1', right_stereo=INPUT_DIR+'/frames/mono2', out=OUTPUT_DIR+'/depth', disparity_algorithm='sgbm', focal_length=FL, baseline=BASELINE, numDisparities = 16, blockSize = 15):
+def get_depth(left_stereo=INPUT_DIR+'/frames/mono1', right_stereo=INPUT_DIR+'/frames/mono2', out=OUTPUT_DIR+'/depth', disparity_algorithm='sgbm', focal_length=FL, baseline=BASELINE, numDisparities = 8, blockSize = 15):
     filenames = get_filenames(left_stereo)
     for i, filename in enumerate(filenames):
         filename = filename.split("/")[-1]
