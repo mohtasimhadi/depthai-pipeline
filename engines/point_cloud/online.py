@@ -40,7 +40,7 @@ class PointCloudVisualizer:
         self.point_cloud_window.update_geometry(self.point_cloud)
         self.point_cloud_window.poll_events()
         self.point_cloud_window.update_renderer()
-        o3d.io.write_point_cloud(f"{OUTPUT_DIR}/pcl_{str(timestamp)}.ply", self.point_cloud)
+        o3d.io.write_point_cloud(f"{OUTPUT_DIR}/pointclouds/pcl_{str(timestamp)}.ply", self.point_cloud)
 
     def align_point_clouds(self):
         voxel_radius = [0.04, 0.02, 0.01]
@@ -85,7 +85,7 @@ class PointCloudVisualizer:
 
     def save_point_cloud(self):
         for camera in self.cameras:
-            o3d.io.write_point_cloud(f"{OUTPUT_DIR}/pcl_{camera.mxid}.ply", camera.point_cloud)
+            o3d.io.write_point_cloud(f"{OUTPUT_DIR}/pointclouds/pcl_{camera.mxid}.ply", camera.point_cloud)
 
     def quit(self):
         self.running = False

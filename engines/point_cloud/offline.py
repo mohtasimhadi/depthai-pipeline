@@ -1,11 +1,9 @@
 import cv2
-import glob
 import numpy as np
-import os
 import torch
 import open3d as o3d
 from PIL import Image
-
+from utils.file_processing import get_filenames
 from depth_anything_v2.dpt import DepthAnythingV2
 from utils.log import *
 from configs.depth import MODEL_CONFIGS, DEFAULT_MODEL, MODEL_DIR
@@ -18,18 +16,6 @@ def get_model(default_model, model_dir):
     depth_anything.load_state_dict(torch.load(model_dir, map_location='cpu'))
     depth_anything = depth_anything.to('cuda').eval()
     return depth_anything
-
-def get_filenames(img_path):
-    if os.path.isfile(img_path):
-        if img_path.endswith('txt'):
-            with open(img_path, 'r') as f:
-                filenames = f.read().splitlines()
-        else:
-            filenames = [img_path]
-    else:
-        filenames = glob.glob(os.path.join(img_path, '**/*'), recursive=True)
-    filenames.sort()
-    return filenames
 
 def generate_pointclouds(img_path = RGB_IMAGE_DIR, output_dir=OUTPUT_DIR, default_model=DEFAULT_MODEL, model_dir=MODEL_DIR):
     depth_anything = get_model(default_model=default_model, model_dir=model_dir)
@@ -59,7 +45,7 @@ def generate_pointclouds(img_path = RGB_IMAGE_DIR, output_dir=OUTPUT_DIR, defaul
         pcd.points = o3d.utility.Vector3dVector(points)
         pcd.colors = o3d.utility.Vector3dVector(colors)
         filename = filename.split("/")[-1]
-        o3d.io.write_point_cloud(f"{output_dir}/{filename}.ply", pcd)
+        o3d.io.write_point_cloud(f"{output_dir}/pointclouds/{filename}.ply", pcd)
     print(f"{SUCCESS}Pointclouds saved in {output_dir}")
 
         

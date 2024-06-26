@@ -17,6 +17,7 @@ SQUARE_SIZE = float(os.getenv("square_arm_size"))
 FL=float(os.getenv("FL"))
 FY=float(os.getenv("FY"))
 FX=float(os.getenv("FX"))
+BASELINE=float(os.getenv("BASELINE"))
 NYU_DATA=False
 FINAL_HEIGHT=int(os.getenv("FINAL_HEIGHT"))
 FINAL_WIDTH=int(os.getenv("FINAL_WIDTH"))
