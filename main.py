@@ -2,14 +2,16 @@ import argparse
 from utils.log import *
 from camera import stream_pointcloud
 from helpers.frame_extraction import extract_frames
-from engines.point_cloud.offline import generate_pointclouds
+from engines.point_cloud.depth_anything import generate_pointclouds
 from camera.calibration import calibrate_camera
+from engines.depth.stereo_depth import get_depth
 
 functions = {
     "calibrate"         :   (calibrate_camera, []),
     "stream"            :   (stream_pointcloud, []),
     "frame_extraction"  :   (extract_frames, ['video_path', 'output_dir']),
-    "offline_pcl"       :   (generate_pointclouds, ['img_path', 'output_dir', 'default_model', 'model_dir'])
+    "offline_pcl"       :   (generate_pointclouds, ['img_path', 'output_dir', 'default_model', 'model_dir']),
+    "offline_depth"     :   (get_depth, ['left_stereo', 'right_stereo', 'out', 'disparity_algorithm', 'focal_length', 'baseline', 'numDisparities', 'blockSize'])
 }
 
 
