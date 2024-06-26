@@ -20,6 +20,7 @@ MEDIAN   = dai.StereoDepthProperties.MedianFilter.KERNEL_7x7
 
 # Input/Output
 OUTPUT_DIR = os.getenv("OUT")
+INPUT_DIR = os.getenv("INPUT")
 RGB_IMAGE_DIR = os.getenv("RGB_IMAGE_DIR")
 STEREO_1_IMAGE_DIR = os.getenv("STEREO_1_IMAGE_DIR")
 STEREO_2_IMAGE_DIR = os.getenv("STEREO_2_IMAGE_DIR")
