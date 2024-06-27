@@ -51,8 +51,8 @@ def record_video(device_id, mxid):
     ve3.bitstream.link(ve3Out.input)
     imu.out.link(xlinkOut.input)
 
-    base_folder = "Bed_1"
-    video_folder = os.path.join(base_folder, "Video")
+    base_folder = "input/lab_data/"
+    video_folder = os.path.join(base_folder, "video")
     if not os.path.exists(video_folder):
         os.makedirs(video_folder)
     
