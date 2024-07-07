@@ -83,6 +83,7 @@ with dai.Device(pipeline) as device:
     queues.append(device.getOutputQueue(name="color", maxSize=30, blocking=True))
     queues.append(device.getOutputQueue(name="monoL", maxSize=30, blocking=True))
     queues.append(device.getOutputQueue(name="monoR", maxSize=30, blocking=True))
+    queues.append(device.getOutputQueue(name="imu", maxSize=30, blocking=True))
     imu_queue = device.getOutputQueue(name='imu', maxSize=30, blocking=True)
     sync = HostSync()
 
@@ -100,19 +101,19 @@ with dai.Device(pipeline) as device:
         'extrinsics_left_to_rgb'    : calibData.getCameraExtrinsics(dai.CameraBoardSocket.CAM_B, dai.CameraBoardSocket.CAM_A),
         'extrinsics_right_to_rgb'   : calibData.getCameraExtrinsics(dai.CameraBoardSocket.CAM_C, dai.CameraBoardSocket.CAM_A)
     }
-    calib_filename = os.path.join(output_dir, 'calibration.json')
-    with open(calib_filename, 'w') as f:
+    file_calibration = os.path.join(output_dir, 'calibration.json')
+    with open(file_calibration, 'w') as f:
         json.dump(calib_dict, f, indent=4)
-    
-    print(calib_dict)
 
     imu_list = []
-    baseTs = None
+    # baseTs = None
 
     file_color = open(os.path.join(output_dir, 'color.h265'), 'wb')
     file_monoL = open(os.path.join(output_dir, 'monoL.h264'), 'wb')
     file_monoR = open(os.path.join(output_dir, 'monoR.h264'), 'wb')
     file_depth = open(os.path.join(output_dir, 'depth.mjpeg'), 'wb')
+    file_times = open(os.path.join(output_dir, 'timestamps.txt'), 'wb')
+    file_imus = open(os.path.join(output_dir, 'imu_data.txt'), 'wb')
     print("Press Ctrl+C to stop encoding...")
     try:
         while True:
@@ -124,10 +125,6 @@ with dai.Device(pipeline) as device:
                     gyroValues = imu_packet.gyroscope
                     acceleroTs = acceleroValues.getTimestampDevice()
                     gyroTs = gyroValues.getTimestampDevice()
-                    if baseTs is None:
-                        baseTs = acceleroTs if acceleroTs < gyroTs else gyroTs
-                    acceleroTs = timeDeltaToMilliS(acceleroTs - baseTs)
-                    gyroTs = timeDeltaToMilliS(gyroTs - baseTs)
 
                     imu_data = {
                         "acceleroMeter" : {
@@ -143,16 +140,18 @@ with dai.Device(pipeline) as device:
                             "timestamp": gyroTs
                         }
                     }
-                    imu_list.append(imu_data)
+                    file_imus.write(("{'imu_timestamp': '" + str(imu_message.getTimestampDevice()) + "',    'IMU': " + str(imu_data) + '\n').encode())
 
             for queue in queues:
                 new_message = queue.get()
                 message = sync.add_msg(queue.getName(), new_message)
                 if message:
                     file_depth.write(message['depth'].getData())
-                    message['color'].getData().tofile(file_color)
+                    file_color.write(message['color'].getData())
+                    # message['color'].getData().tofile(file_color)
                     file_monoL.write(message['monoL'].getData())
                     file_monoR.write(message['monoR'].getData())
+                    # print(str(message['monoR'].getData()))
+                    file_times.write(("{'camera_timestamp': '" + str(message['depth'].getTimestampDevice()) + "', 'frame_number': " + str(message['depth'].getSequenceNum())+"}\n").encode())
     except KeyboardInterrupt:
-        print(len(imu_data))
         pass
