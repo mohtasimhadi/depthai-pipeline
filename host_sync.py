@@ -1,5 +1,5 @@
 from datetime import timedelta
-MS_THRESHOLD = 11
+MS_THRESHOLD = 5
 
 class HostSync:
     def __init__(self):
@@ -56,14 +56,14 @@ class HostSync:
                 synced[name] = diffs.index(dif)
 
 
-        if len(synced) == 5: # We have 3 synced msgs (IMU packet + disp + rgb)
+        if len(synced) == 4: # We have 3 synced msgs (IMU packet + disp + rgb)
             # print('--------\Synced msgs! Target ts', ts, )
             # Remove older msgs
             for name, i in synced.items():
                 self.arrays[name] = self.arrays[name][i:]
             ret = {}
             for name, arr in self.arrays.items():
-                ret[name] = arr.pop(0)
+                ret[name] = arr.pop(0)[1]
                 # print(f'{name} msg ts: {ret[name][0]}, diff {abs(ts - ret[name][0]).microseconds / 1000}ms')
             return ret
         return False
