@@ -14,3 +14,7 @@ run_video.py
 outdir
 depthai_output
 dataset
+*.mp4
+colmap
+*.pcd
+*.ply
